@@ -1,3 +1,5 @@
+import * as model from "./model.js";
+
 // import icons from '../img/icons.svg' - parcel 1
 import icons from "url:../img/icons.svg";
 import "core-js/stable";
@@ -29,33 +31,15 @@ const renderSpinner = function (parentElement) {
 
 const showRecipie = async function () {
   try {
-    const id = window.location.hash.slice(1);
+    // const id = window.location.hash.slice(1);
+    const id = "5ed6604591c37cdc054bc886";
     console.log(id);
 
     if (!id) return; // this is a guard clause
-    // loading data
-    const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
     renderSpinner(recipeContainer);
 
-    const response = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${apiKey}`
-    );
-    const data = await response.json();
-
-    if (!response.ok) throw new Error(`${data.mesaage} (${response.status})`);
-
-    let recipie = data.data.recipe;
-    recipie = {
-      id: recipie.id,
-      title: recipie.title,
-      publisher: recipie.publisher,
-      sourceUrl: recipie.source_url,
-      image: recipie.image_url,
-      servings: recipie.servings,
-      cookingTime: recipie.cooking_time,
-      ingredients: recipie.ingredients,
-    };
-    console.log(recipie);
+    // loading data
+    await model.loadRecipe(id); //async funciton - returns a promise that we have to handle
 
     // render data
     const markup = `
