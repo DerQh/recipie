@@ -17,11 +17,6 @@ export const getJSON = async function (url) {
     ]);
 
     const data = await response.json();
-
-    // const response = await Promise.race[
-    //   (fetch(`${url}/${id}?key=${apiKey}`), timeout(100))
-    // ];
-
     if (!response.ok) throw new Error(`${data.mesaage} (${response.status})`);
     return data;
   } catch (err) {
