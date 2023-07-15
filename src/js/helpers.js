@@ -1,4 +1,6 @@
 // Goal is to contain functions that are reused over and over in the project
+import { TIMEOUT_SEC } from "./config";
+
 const timeout = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
@@ -13,7 +15,7 @@ export const getJSON = async function (url) {
     const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
     const response = await Promise.race([
       fetch(`${url}/${id}?key=${apiKey}`),
-      timeout(10),
+      timeout(TIMEOUT_SEC),
     ]);
 
     const data = await response.json();
