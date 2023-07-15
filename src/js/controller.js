@@ -10,11 +10,12 @@ const recipeContainer = document.querySelector(".recipe");
 
 ///////////////////////////////////////
 
-const controlRecipies = async function () {
+const controlRecipies = async function (id) {
   try {
     // const id = window.location.hash.slice(1);
 
-    // if (!id) return; // this is a guard clause
+
+    if (!id) return; // this is a guard clause
     recipieView.renderSpinner();
 
     // loading data

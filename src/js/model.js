@@ -1,5 +1,5 @@
 import { async } from "regenerator-runtime";
-import { API_KEY, API_URL } from "./config";
+import { API_URL } from "./config";
 import { getJSON } from "./helpers";
 
 export const state = {
@@ -8,9 +8,9 @@ export const state = {
 
 export const loadRecipe = async function () {
   try {
-    const data = await getJSON(API_URL);
+    let recipie = await getJSON(API_URL);
+    recipie = recipie.data.recipe;
 
-    let recipie = data.data.recipe;
     state.recipie = {
       id: recipie.id,
       title: recipie.title,
