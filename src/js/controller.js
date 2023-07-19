@@ -2,6 +2,7 @@ import * as model from "./model.js";
 import recipieView from "./views/recipieView.js";
 import resultsView from "./views/resultsView.js";
 import searchView from "./views/searchView.js";
+import paginateView from "./views/paginateView.js";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -46,6 +47,9 @@ const searchResultsControl = async function () {
     // console.log(model.state.searchData.results);
     // resultsView.render(model.state.searchData.results);
     resultsView.render(model.getSearchResultsPage());
+
+    // render the next and previous buttons
+    paginateView.render(model.state.searchData);
   } catch (err) {}
 };
 

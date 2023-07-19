@@ -6,9 +6,9 @@ export const state = {
   searchData: {
     query: "",
     results: [],
+    pageResults: pageResult,
+    page: 1,
   },
-  pageResults: pageResult,
-  page: 1,
 };
 
 export const loadRecipe = async function () {
@@ -55,10 +55,10 @@ export const loadSearchResults = async function (query) {
   }
 };
 
-export const getSearchResultsPage = function (page = state.page) {
-  state.page = page;
-  const start = (page - 1) * pageResult;
-  const end = page * pageResult;
+export const getSearchResultsPage = function (page = state.searchData.page) {
+  state.searchData.page = page;
+  const start = (page - 1) * state.searchData.pageResults;
+  const end = page * state.searchData.pageResults;
   // console.log(start, end);
   return state.searchData.results.slice(start, end);
 };
