@@ -11,10 +11,28 @@ const timeout = function (s) {
 
 export const getJSON = async function (url) {
   try {
-    const id = "5ed6604591c37cdc054bc886";
+    let id = window.location.hash.slice(1);
     const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
     const response = await Promise.race([
       fetch(`${url}/${id}?key=${apiKey}`),
+      timeout(TIMEOUT_SEC),
+    ]);
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(`${data.mesaage} (${response.status})`);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const get_JSON = async function (querry) {
+  try {
+    const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
+    // const querry = "pizza";
+    const link = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${querry}&key=${apiKey}`;
+    const response = await Promise.race([
+      fetch(`${link}`),
       timeout(TIMEOUT_SEC),
     ]);
 

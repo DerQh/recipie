@@ -1,8 +1,12 @@
 import { API_URL } from "./config";
-import { getJSON } from "./helpers";
+import { getJSON, get_JSON } from "./helpers";
 
 export const state = {
   recipie: {},
+  searchData: {
+    query: "",
+    results: [],
+  },
 };
 
 export const loadRecipe = async function () {
@@ -20,10 +24,33 @@ export const loadRecipe = async function () {
       cookingTime: recipie.cooking_time,
       ingredients: recipie.ingredients,
     };
-    console.log(state.recipie);
+    // console.log(state.recipie);
   } catch (err) {
     // temporary error handling
     console.log(`${err}`);
     throw err;
   }
 };
+
+export const loadSearchResults = async function (query) {
+  try {
+    state.searchData.query = query;
+    let data = await get_JSON(state.searchData.query);
+    data = data.data.recipes;
+
+    state.searchData.results = data.map((recipie) => {
+      return {
+        id: recipie.id,
+        title: recipie.title,
+        publisher: recipie.publisher,
+        image: recipie.image_url,
+      };
+    });
+    // console.log(state.searchData.results);
+  } catch (err) {
+    console.error(`${err} !!!! `);
+    throw err;
+  }
+};
+
+loadSearchResults("kev");
