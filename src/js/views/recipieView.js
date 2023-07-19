@@ -6,6 +6,8 @@ import { Fraction } from "fractional";
 class RecipieView {
   #parentEl = document.querySelector(".recipe");
   #data;
+  #errorMEssage = "We couldnt find the recpie, please try again !! ";
+  #message = "";
 
   render(data) {
     this.#data = data;
@@ -25,7 +27,7 @@ class RecipieView {
           </svg>
         </div> 
         `;
-    this.#parentEl.innerHTML = "";
+    this.#clear;
     this.#parentEl.insertAdjacentHTML("afterbegin", markup);
   };
 
@@ -114,6 +116,38 @@ class RecipieView {
           </a>
         </div>
         `;
+  }
+  // Render Errors
+  renderError(message = this.#errorMEssage) {
+    const markup = `<div class="error">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+    this.#clear;
+    this.#parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+  // render Sucess message
+  renderMessage(message) {
+    const markup = `<div class="message">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-smile"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+    this.#clear;
+    this.#parentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+  // Publisheer subscriber patttern
+  addHandlerRender(handlerfunction) {
+    ["hashchange", "load"].forEach((event) =>
+      window.addEventListener(event, handlerfunction)
+    );
   }
 
   #generateMarkupIngredient(ing) {

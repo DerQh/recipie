@@ -16,7 +16,7 @@ const controlRecipies = async function (id) {
 
 
     if (!id) return; // this is a guard clause
-    recipieView.renderSpinner();
+    // recipieView.renderSpinner();
 
     // loading data
     await model.loadRecipe(); //async funciton - returns a promise that we have to handle
@@ -25,12 +25,14 @@ const controlRecipies = async function (id) {
     recipieView.render(model.state.recipie);
   } catch (err) {
     console.log(err);
+    recipieView.renderError();
   }
 };
 
-// window.addEventListener("hashchange", controlRecipies);
-// window.addEventListener("load", controlRecipies);
+//  Publisher subscriber pattern to handle event listiners
+// first initialize the function below which will call the function from recipeView
+const init = function () {
+  recipieView.addHandlerRender(controlRecipies);
+};
 
-["hashchange", "load"].forEach((event) =>
-  window.addEventListener(event, controlRecipies)
-);
+init();
