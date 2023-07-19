@@ -53,10 +53,20 @@ const searchResultsControl = async function () {
   } catch (err) {}
 };
 
+const paginateControl = function (pagedata_num) {
+  // console.log(pagedata_num);
+  // render new resullts
+  resultsView.render(model.getSearchResultsPage(pagedata_num));
+
+  // render the next and previous buttons
+  paginateView.render(model.state.searchData);
+};
+
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
 const init = function () {
   recipieView.addHandlerRender(controlRecipies);
   searchView.addHandlerSearch(searchResultsControl);
+  paginateView.addClickHandler(paginateControl);
 };
 init();
