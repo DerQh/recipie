@@ -1,4 +1,4 @@
-import { API_URL } from "./config";
+import { API_URL, pageResult } from "./config";
 import { getJSON, get_JSON } from "./helpers";
 
 export const state = {
@@ -7,6 +7,8 @@ export const state = {
     query: "",
     results: [],
   },
+  pageResults: pageResult,
+  page: 1,
 };
 
 export const loadRecipe = async function () {
@@ -53,4 +55,10 @@ export const loadSearchResults = async function (query) {
   }
 };
 
-loadSearchResults("kev");
+export const getSearchResultsPage = function (page = state.page) {
+  state.page = page;
+  const start = (page - 1) * pageResult;
+  const end = page * pageResult;
+  // console.log(start, end);
+  return state.searchData.results.slice(start, end);
+};

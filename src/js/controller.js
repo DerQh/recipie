@@ -10,9 +10,9 @@ const recipeContainer = document.querySelector(".recipe");
 
 // https://forkify-api.herokuapp.com/v2
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipies = async function (id) {
   try {
@@ -44,7 +44,8 @@ const searchResultsControl = async function () {
 
     // Render Results
     // console.log(model.state.searchData.results);
-    resultsView.render(model.state.searchData.results);
+    // resultsView.render(model.state.searchData.results);
+    resultsView.render(model.getSearchResultsPage());
   } catch (err) {}
 };
 
