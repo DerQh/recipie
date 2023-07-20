@@ -71,6 +71,6 @@ class PaginateView extends View {
     // Page 1  and no other pages
     return "";
   }
-}
+} 
 
 export default new PaginateView();

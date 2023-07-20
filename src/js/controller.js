@@ -62,10 +62,21 @@ const paginateControl = function (pagedata_num) {
   paginateView.render(model.state.searchData);
 };
 
+const servingControl = function (newServing) {
+  // recipe update - servings :
+  model.updateServings(newServing);
+
+  // update the recipie view
+  // recipieView.render(model.state.recipie);
+    recipieView.update(model.state.recipie);
+
+};
+
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
 const init = function () {
   recipieView.addHandlerRender(controlRecipies);
+  recipieView.addHandlerServingUpdate(servingControl)
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
 };
