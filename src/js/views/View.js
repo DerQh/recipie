@@ -15,9 +15,6 @@ export default class View {
 
   // ----------------Developing a DOM Updating algorithm------------------- //
   update(data) {
-    if (!data || (Array.isArray(data) && data.length === 0))
-      return this.renderError();
-
     this._data = data;
     const markupNew = this._generateMarkup();
 
