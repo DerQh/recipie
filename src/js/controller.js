@@ -3,6 +3,7 @@ import recipieView from "./views/recipieView.js";
 import resultsView from "./views/resultsView.js";
 import searchView from "./views/searchView.js";
 import paginateView from "./views/paginateView.js";
+import bookmarkView from "./views/bookmarkView.js";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -76,12 +77,19 @@ const servingControl = function (newServing) {
 
 // cadd new bookmark
 const bookmarkControl = function () {
+  // add or remove bookmarks 
   if (!model.state.recipie.bookmarked) {
     model.add_Bookmark(model.state.recipie);
   } else model.bookmark_Delete(model.state.recipie.id);
 
   // console.log(model.state.recipie);
+  // updatethe recipie view
   recipieView.update(model.state.recipie);
+
+  // render bookmark 
+  bookmarkView.render(model.state.bookmarks)
+
+  // 
 };
 
 //  Publisher subscriber pattern to handle event listiners
@@ -93,4 +101,7 @@ const init = function () {
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
 };
+
+
+
 init();
