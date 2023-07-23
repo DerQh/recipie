@@ -9,9 +9,10 @@ export const state = {
     pageResults: pageResult,
     page: 1,
   },
+  bookmarks: [],
 };
 
-export const loadRecipe = async function () {
+export const loadRecipe = async function (id) {
   try {
     let recipie = await getJSON(API_URL);
     recipie = recipie.data.recipe;
@@ -26,6 +27,10 @@ export const loadRecipe = async function () {
       cookingTime: recipie.cooking_time,
       ingredients: recipie.ingredients,
     };
+
+    if (state.bookmarks.some((bookmrk) => bookmrk.id === id)) {
+      state.recipie.bookmarked = true;
+    } else state.recipie.bookmarked = false;
     // console.log(state.recipie);
   } catch (err) {
     // temporary error handling
@@ -48,6 +53,8 @@ export const loadSearchResults = async function (query) {
         image: recipie.image_url,
       };
     });
+    state.searchData.page = 1;
+
     // console.log(state.searchData.results);
   } catch (err) {
     console.error(`${err} !!!! `);
@@ -69,4 +76,21 @@ export const updateServings = function (newServing) {
     // newQuantity = oldQuantity * newServings/ old servings
   });
   state.recipie.servings = newServing;
+};
+
+export const add_Bookmark = function (recipe) {
+  // Add recipie to bookmark
+  state.bookmarks.push(recipe);
+
+  // highlight recipe as bookmarked
+  if (recipe.id === state.recipie.id) state.recipie.bookmarked = true;
+};
+
+export const bookmark_Delete = function (id) {
+  // delete bookmark
+  const index = state.bookmarks.findIndex((element) => element.id === id);
+  state.bookmarks.splice(index, 1);
+
+  // unbookmark
+  if (id === state.recipie.id) state.recipie.bookmarked = false;
 };

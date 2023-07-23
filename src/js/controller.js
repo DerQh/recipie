@@ -18,14 +18,14 @@ const recipeContainer = document.querySelector(".recipe");
 const controlRecipies = async function (id) {
   try {
     recipieView.renderSpinner();
-    
+
     if (!id) return; // this is a guard clause
 
     // Results view to mark selected mark search results
     resultsView.update(model.getSearchResultsPage());
 
     // loading data
-    await model.loadRecipe(); //async funciton - returns a promise that we have to handle
+    await model.loadRecipe(id); //async funciton - returns a promise that we have to handle
 
     // render data
     recipieView.render(model.state.recipie);
@@ -74,11 +74,22 @@ const servingControl = function (newServing) {
   recipieView.update(model.state.recipie);
 };
 
+// cadd new bookmark
+const bookmarkControl = function () {
+  if (!model.state.recipie.bookmarked) {
+    model.add_Bookmark(model.state.recipie);
+  } else model.bookmark_Delete(model.state.recipie.id);
+
+  // console.log(model.state.recipie);
+  recipieView.update(model.state.recipie);
+};
+
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
 const init = function () {
   recipieView.addHandlerRender(controlRecipies);
   recipieView.addHandlerServingUpdate(servingControl);
+  recipieView.addHandler_addBookmark(bookmarkControl);
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
 };
