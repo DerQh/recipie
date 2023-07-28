@@ -1,14 +1,11 @@
 import * as model from "./model.js";
+import { CLOSE_SECONDS } from "./config.js";
 import recipieView from "./views/recipieView.js";
 import resultsView from "./views/resultsView.js";
 import searchView from "./views/searchView.js";
 import paginateView from "./views/paginateView.js";
 import bookmarkView from "./views/bookmarkView.js";
 import addRecipie from "./views/addRecipie.js";
-
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import { async } from "regenerator-runtime";
 
 const recipeContainer = document.querySelector(".recipe");
 
@@ -107,6 +104,19 @@ const control_bookmarks = function () {
 const recipeaddControl = async function (newRecipe) {
   try {
     await model.RecipeUpload(newRecipe);
+    // console.log(model.state.recipie);
+
+    // Render the new recipe data
+    recipieView.render(model.state.recipie);
+
+    // Sucess Message
+    message = "Recipe was loaded Sucessfully";
+    recipieView.renderMessageLoad(message);
+
+    // close form window
+    setTimeout(function () {
+      addRecipie.windowToggel();
+    }, CLOSE_SECONDS * 1000);
   } catch (err) {
     console.error("🧯", err);
     addRecipie.renderError(err.message);

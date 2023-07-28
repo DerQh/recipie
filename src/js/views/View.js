@@ -90,4 +90,18 @@ export default class View {
     this._clear();
     this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
+
+  renderMessageLoad() {
+    const parentEL = document.querySelector(".add-recipe-window ");
+    const markup = `<div class="message">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-smile"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>`;
+    parentEL.innerHTML = "";
+    parentEL.insertAdjacentHTML("afterbegin", markup);
+  }
 }

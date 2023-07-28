@@ -1,4 +1,5 @@
 // Goal is to contain functions that are reused over and over in the project
+import { method } from "lodash";
 import { TIMEOUT_SEC } from "./config";
 
 const timeout = function (s) {
@@ -12,9 +13,8 @@ const timeout = function (s) {
 export const getJSON = async function (url) {
   try {
     let id = window.location.hash.slice(1);
-    const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
     const response = await Promise.race([
-      fetch(`${url}/${id}?key=${apiKey}`),
+      fetch(`${url}/${id}`),
       timeout(TIMEOUT_SEC),
     ]);
 
@@ -26,11 +26,11 @@ export const getJSON = async function (url) {
   }
 };
 
+// use the functions below
 export const get_JSON = async function (querry) {
   try {
-    const apiKey = "fe6c0263-055e-4cb7-a199-cd527b7f80ad";
     // const querry = "pizza";
-    const link = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${querry}&key=${apiKey}`;
+    const link = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${querry}`;
     const response = await Promise.race([
       fetch(`${link}`),
       timeout(TIMEOUT_SEC),
@@ -38,6 +38,26 @@ export const get_JSON = async function (querry) {
 
     const data = await response.json();
     if (!response.ok) throw new Error(`${data.mesaage} (${response.status})`);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const send_JSON = async function (url, upload_data) {
+  try {
+    const post_data = fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(upload_data),
+    });
+
+    const post = await Promise.race([post_data, timeout(TIMEOUT_SEC)]);
+    const data = await post.json();
+
+    if (!post.ok) throw new Error(`${data.mesaage} (${post.status})`);
     return data;
   } catch (err) {
     throw err;

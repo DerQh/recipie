@@ -5,6 +5,8 @@ import { Fraction } from "fractional";
 
 class AddRecipieView extends View {
   _parentEl = document.querySelector(".upload");
+  _message = "Recipe was loaded Sucessfully";
+
   _windowEL = document.querySelector(".add-recipe-window");
   _overlayEL = document.querySelector(".overlay");
   openBtn = document.querySelector(".nav__btn--add-recipe");
