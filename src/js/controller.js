@@ -4,9 +4,11 @@ import resultsView from "./views/resultsView.js";
 import searchView from "./views/searchView.js";
 import paginateView from "./views/paginateView.js";
 import bookmarkView from "./views/bookmarkView.js";
+import addRecipie from "./views/addRecipie.js";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import { async } from "regenerator-runtime";
 
 const recipeContainer = document.querySelector(".recipe");
 
@@ -24,6 +26,9 @@ const controlRecipies = async function (id) {
 
     // Results view to mark selected mark search results
     resultsView.update(model.getSearchResultsPage());
+
+    // debugger;
+    bookmarkView.update(model.state.bookmarks);
 
     // loading data
     await model.loadRecipe(id); //async funciton - returns a promise that we have to handle
@@ -75,33 +80,50 @@ const servingControl = function (newServing) {
   recipieView.update(model.state.recipie);
 };
 
-// cadd new bookmark
+// add new bookmark
 const bookmarkControl = function () {
-  // add or remove bookmarks 
+  // add or remove bookmarks
   if (!model.state.recipie.bookmarked) {
     model.add_Bookmark(model.state.recipie);
   } else model.bookmark_Delete(model.state.recipie.id);
 
   // console.log(model.state.recipie);
+
+  // render bookmark
+  bookmarkView.render(model.state.bookmarks);
+
   // updatethe recipie view
   recipieView.update(model.state.recipie);
 
-  // render bookmark 
-  bookmarkView.render(model.state.bookmarks)
-
-  // 
+  //
 };
 
+const control_bookmarks = function () {
+  bookmarkView.render(model.state.bookmarks);
+};
+
+// contol adding of REcipies
+
+const recipeaddControl = async function (newRecipe) {
+  try {
+    await model.RecipeUpload(newRecipe);
+  } catch (err) {
+    console.error("🧯", err);
+    addRecipie.renderError(err.message);
+  }
+
+  // upate the new eecipe data
+};
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
 const init = function () {
+  bookmarkView.addHandlerRender(control_bookmarks);
   recipieView.addHandlerRender(controlRecipies);
   recipieView.addHandlerServingUpdate(servingControl);
   recipieView.addHandler_addBookmark(bookmarkControl);
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
+  addRecipie.addHander_Upload(recipeaddControl);
 };
-
-
 
 init();

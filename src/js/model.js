@@ -1,3 +1,4 @@
+import { async } from "regenerator-runtime";
 import { API_URL, pageResult } from "./config";
 import { getJSON, get_JSON } from "./helpers";
 
@@ -77,6 +78,10 @@ export const updateServings = function (newServing) {
   });
   state.recipie.servings = newServing;
 };
+const storeBookmark = function () {
+  // Add Bookmark
+  localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+};
 
 export const add_Bookmark = function (recipe) {
   // Add recipie to bookmark
@@ -84,6 +89,8 @@ export const add_Bookmark = function (recipe) {
 
   // highlight recipe as bookmarked
   if (recipe.id === state.recipie.id) state.recipie.bookmarked = true;
+
+  storeBookmark();
 };
 
 export const bookmark_Delete = function (id) {
@@ -93,4 +100,39 @@ export const bookmark_Delete = function (id) {
 
   // unbookmark
   if (id === state.recipie.id) state.recipie.bookmarked = false;
+
+  storeBookmark();
+};
+
+function init() {
+  const storage = localStorage.getItem("bookmarks");
+  if (storage) state.bookmarks = JSON.parse(storage);
+}
+
+init();
+
+const clearBookmarks = function () {
+  localStorage.clear("bookmarks");
+};
+
+// clearBookmarks();
+
+export const RecipeUpload = async function (newRecipe) {
+  try {
+    let ingredients = Object.entries(newRecipe); // Object to Array
+    ingredients = ingredients
+      .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
+      .map((ing) => {
+        const ingArray = ing[1].replaceAll(" ", "").split(",");
+        if (ingArray.length !== 3)
+          throw new Error(
+            "Wrong ingredient format! Please use the correct format."
+          );
+        const [quantity, unit, description] = ingArray;
+        return { quantity: quantity ? +quantity : null, unit, description };
+      });
+    console.log(ingredients);
+  } catch (err) {
+    throw err;
+  }
 };
