@@ -104,4 +104,16 @@ export default class View {
     parentEL.innerHTML = "";
     parentEL.insertAdjacentHTML("afterbegin", markup);
   }
+  renderSpinnerLoad = function () {
+    const parentEL = document.querySelector(".add-recipe-window ");
+    const markup = `
+       <div class="spinner">
+          <svg>
+            <use href="${icons}#icon-loader"></use>
+          </svg>
+        </div> 
+        `;
+    parentEL.innerHTML = "";
+    parentEL.insertAdjacentHTML("afterbegin", markup);
+  };
 }

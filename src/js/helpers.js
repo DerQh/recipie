@@ -1,6 +1,7 @@
 // Goal is to contain functions that are reused over and over in the project
 import { method } from "lodash";
 import { TIMEOUT_SEC } from "./config";
+import { API_KEY } from "./config";
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -30,7 +31,7 @@ export const getJSON = async function (url) {
 export const get_JSON = async function (querry) {
   try {
     // const querry = "pizza";
-    const link = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${querry}`;
+    const link = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${querry}&key=${API_KEY}`;
     const response = await Promise.race([
       fetch(`${link}`),
       timeout(TIMEOUT_SEC),

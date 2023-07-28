@@ -17,6 +17,7 @@ class ResultsView extends View {
   _generateMarkupPreview(results) {
     const id = window.location.hash.slice(1);
     // console.log(id === results.id);
+    console.log(results.key);
     return `
        <li class="preview">
             <a class="preview__link ${
@@ -28,8 +29,15 @@ class ResultsView extends View {
               <div class="preview__data">
                 <h4 class="preview__title">${results.title}</h4>
                 <p class="preview__publisher">${results.publisher}</p>
-               
+                 <div class="preview__user-generated ${
+                   result.key ? "" : "hidden"
+                 }">
+                    <svg>
+                    <use href="${icons}#icon-user"></use>
+                     </svg>
+                  </div>
               </div>
+             
             </a>
           </li>
           

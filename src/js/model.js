@@ -34,7 +34,7 @@ export const loadRecipe = async function (id) {
     const id_test = window.location.hash.slice(1);
     id = id_test;
 
-    let recipie = await getJSON(API_URL);
+    let recipie = await getJSON(`${API_URL}${id}?key=${API_KEY}`);
 
     state.recipie = recipe_Object(recipie); //
 
@@ -63,6 +63,7 @@ export const loadSearchResults = async function (query) {
         title: recipie.title,
         publisher: recipie.publisher,
         image: recipie.image_url,
+        ...(recipie.key && { key: recipie.key }),
       };
     });
     state.searchData.page = 1;
@@ -126,7 +127,7 @@ const clearBookmarks = function () {
   localStorage.clear("bookmarks");
 };
 
-// clearBookmarks();
+clearBookmarks();
 
 export const RecipeUpload = async function (newRecipe) {
   try {

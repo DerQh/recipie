@@ -103,6 +103,9 @@ const control_bookmarks = function () {
 
 const recipeaddControl = async function (newRecipe) {
   try {
+    // render spinner
+    addRecipie.renderSpinnerLoad();
+
     await model.RecipeUpload(newRecipe);
     // console.log(model.state.recipie);
 
@@ -113,6 +116,13 @@ const recipeaddControl = async function (newRecipe) {
     message = "Recipe was loaded Sucessfully";
     recipieView.renderMessageLoad(message);
 
+    // Render bookmarkView
+    addRecipie.render(model.state.bookmarks);
+
+    // change id in url
+    window.history.pushState(null, "", `#${model.state.recipie.id}`);
+
+    
     // close form window
     setTimeout(function () {
       addRecipie.windowToggel();
