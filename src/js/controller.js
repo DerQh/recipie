@@ -133,9 +133,7 @@ const recipeaddControl = async function (newRecipe) {
   // upate the new eecipe data
 };
 
-const newFeature = function () {
-  console.log("Welcome to the application");
-};
+
 
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
@@ -147,7 +145,6 @@ const init = function () {
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
   addRecipie.addHander_Upload(recipeaddControl);
-  newFeature();
 };
 
 init();
