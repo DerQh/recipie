@@ -15,6 +15,7 @@ class BookmarksView extends View {
     return this._data.map(this._generateMarkupPreview).join("");
   }
 
+
   _generateMarkupPreview(results) {
     const id = window.location.hash.slice(1);
     // console.log(id === results.id);

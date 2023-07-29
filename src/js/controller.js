@@ -122,7 +122,6 @@ const recipeaddControl = async function (newRecipe) {
     // change id in url
     window.history.pushState(null, "", `#${model.state.recipie.id}`);
 
-    
     // close form window
     setTimeout(function () {
       addRecipie.windowToggel();
@@ -131,9 +130,13 @@ const recipeaddControl = async function (newRecipe) {
     console.error("🧯", err);
     addRecipie.renderError(err.message);
   }
-
   // upate the new eecipe data
 };
+
+const newFeature = function () {
+  console.log("Welcome to the application");
+};
+
 //  Publisher subscriber pattern to handle event listiners
 // first initialize the function below which will call the function from recipeView
 const init = function () {
@@ -144,6 +147,7 @@ const init = function () {
   searchView.addHandlerSearch(searchResultsControl);
   paginateView.addClickHandler(paginateControl);
   addRecipie.addHander_Upload(recipeaddControl);
+  newFeature();
 };
 
 init();
