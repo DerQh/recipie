@@ -28,7 +28,7 @@ class ResultsView extends View {
                 <h4 class="preview__title">${results.title}</h4>
                 <p class="preview__publisher">${results.publisher}</p>
                  <div class="preview__user-generated ${
-                   result.key ? "" : "hidden"
+                   results.key ? "" : "hidden"
                  }">
                     <svg>
                     <use href="${icons}#icon-user"></use>
