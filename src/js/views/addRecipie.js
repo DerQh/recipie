@@ -1,5 +1,4 @@
 import View from "./View.js";
-import icons from "url:../../img/icons.svg";
 
 class AddRecipieView extends View {
   _parentEl = document.querySelector(".upload");
