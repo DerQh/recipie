@@ -1,8 +1,6 @@
 import icons from "url:../../img/icons.svg";
 
 import View from "./View.js";
-import { result } from "lodash";
-
 class ResultsView extends View {
   _parentEl = document.querySelector(".results");
   _errorMEssage =
