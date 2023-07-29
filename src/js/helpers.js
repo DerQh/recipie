@@ -1,5 +1,4 @@
 // Goal is to contain functions that are reused over and over in the project
-import { method } from "lodash";
 import { TIMEOUT_SEC } from "./config";
 import { API_KEY } from "./config";
 

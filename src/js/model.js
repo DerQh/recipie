@@ -1,4 +1,3 @@
-import { async } from "regenerator-runtime";
 import { API_URL, pageResult, API_KEY } from "./config";
 import { getJSON, get_JSON, send_JSON } from "./helpers";
 
